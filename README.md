@@ -4,7 +4,7 @@
 
 # 1. 准备kitti数据集
 ## 在data/文件夹下新建KITTIdevkit/KITTI两层子目录，所需文件放在KITTI/中
-'
+'''python
 Annotations/
 └── 000000.xml 
 ImageSets/
@@ -18,7 +18,7 @@ Labels/
 create_train_test_txt.py # 3个python工具，后面有详细介绍
 modify_annotations_txt.py
 txt_to_xml.py
-'
+'''
 
 2. 创建docker容器，挂载目录至/home/yourname/data/
 nvidia-docker run -it -v /data/miaowenzhen/datasets/KITTIdevkit:/home/mx/data/KITTIdevkit horovod/pocketflow
