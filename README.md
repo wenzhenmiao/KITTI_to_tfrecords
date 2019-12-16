@@ -2,55 +2,55 @@
 ## Convert KITTI datasets to tfrecords format.
 
 
-# 1. 准备kitti数据集
-## 在data/文件夹下新建KITTIdevkit/KITTI两层子目录，所需文件放在KITTI/中
+# 1. Prepare KITTI datasets
+## Establish two level sub-folder under data/, needed files place under KITTI/
 ```python
 Annotations/
 └── 000000.xml 
 ImageSets/
 └── main/
       └── trainval.txt
-      └── test.txt # 等等
+      └── test.txt # etc
 JPEGImages/
 └── 000000.png
 Labels/
-└── 000000.txt # 自建文件夹，存放原始标注信息，待转化为xml，不属于VOC格式
-create_train_test_txt.py # 3个python工具，后面有详细介绍
+└── 000000.txt # Self-create folder, which stored original label-info, wait to convert to xml
+create_train_test_txt.py # 3 python utils descripted in following
 modify_annotations_txt.py
 txt_to_xml.py
 ```
 
-# 2. 创建docker容器，挂载目录至/home/yourname/data/
+# 2. Create docker container, mount dataset to /home/yourname/data/ 
 ```python
 nvidia-docker run -it -v /data/miaowenzhen/datasets/KITTIdevkit:/home/mx/data/KITTIdevkit horovod/pocketflow
 ```
 
-# 3. 修改KITTI标注，
+# 3. Modify KITTI labels
 ```python
 python modify_annotations_txt.py
 ```
 
-# 4. 将标注文件从txt转化为xml
+# 4. Convert label-files from txt to xml
 ```python
 python txt_to_xml.py
 ```
 
-# 5. 为xml文件添加截断、困难标签
+# 5. Add truncate and difficult label to xml files
 ```python
 bash add_label.sh Annotations/
 ```
 
-# 6. 生成列表文件
+# 6. Create list file
 ```python
 python3 create_train_test_txt.py 
 ```
 
-# 7. 分割TRAIN，VAL子集
+# 7. Divide datasets to train and validation subsets
 ```python
 bash list_to_file.sh
 ```
 
-# 8. 转换为tfrecord格式
+# 8. Convert to tfrecord format
 ```python
 python ./dataset/convert_tfrecords.py
 ```
