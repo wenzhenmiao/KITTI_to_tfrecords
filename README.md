@@ -20,21 +20,37 @@ modify_annotations_txt.py
 txt_to_xml.py
 ```
 
-2. 创建docker容器，挂载目录至/home/yourname/data/
+# 2. 创建docker容器，挂载目录至/home/yourname/data/
+```python
 nvidia-docker run -it -v /data/miaowenzhen/datasets/KITTIdevkit:/home/mx/data/KITTIdevkit horovod/pocketflow
+```
 
-
-3. 修改KITTI标注，
+# 3. 修改KITTI标注，
+```python
 python modify_annotations_txt.py
+```
 
-4.  将标注文件从txt转化为xml
+# 4. 将标注文件从txt转化为xml
+```python
 python txt_to_xml.py
+```
 
-5. 为xml文件添加截断、困难标签
+# 5. 为xml文件添加截断、困难标签
+```python
 bash add_label.sh Annotations/
+```
 
-6. 生成列表文件
+# 6. 生成列表文件
+```python
 python3 create_train_test_txt.py 
+```
 
-7. 分割TRAIN，VAL
+# 7. 分割TRAIN，VAL子集
+```python
 bash list_to_file.sh
+```
+
+# 8. 转换为tfrecord格式
+```python
+python ./dataset/convert_tfrecords.py
+```
